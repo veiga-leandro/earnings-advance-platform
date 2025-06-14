@@ -31,12 +31,20 @@ namespace Earnings.Advance.Platform.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<IEnumerable<AdvanceRequest>> GetByCreatorIdAsync(Guid creatorId)
+        public async Task<(IEnumerable<AdvanceRequest> Items, int TotalCount)> GetByCreatorIdAsync(Guid creatorId, int skip, int take)
         {
-            return await _context.AnticipationRequests
-                .Where(x => x.CreatorId == creatorId)
+            var query = _context.AnticipationRequests
+                .Where(x => x.CreatorId == creatorId);
+
+            var totalCount = await query.CountAsync();
+
+            var items = await query
                 .OrderByDescending(x => x.RequestDate)
+                .Skip(skip)
+                .Take(take)
                 .ToListAsync();
+
+            return (items, totalCount);
         }
 
         public async Task<bool> HasPendingRequestAsync(Guid creatorId)

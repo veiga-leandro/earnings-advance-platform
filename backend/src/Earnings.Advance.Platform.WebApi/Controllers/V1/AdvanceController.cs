@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using Earnings.Advance.Platform.Application.DTOs.Advance;
+using Earnings.Advance.Platform.Application.DTOs.Common;
 using Earnings.Advance.Platform.Application.DTOs.Simulation;
 using Earnings.Advance.Platform.Application.Interfaces;
 using Earnings.Advance.Platform.Domain.Exceptions;
@@ -66,13 +67,18 @@ namespace Earnings.Advance.Platform.WebApi.Controllers.V1
         /// Lists advance requests for a creator
         /// </summary>
         /// <param name="creatorId">Creator ID</param>
+        /// <param name="pageNumber">Page number (starting from 1)</param>
+        /// <param name="pageSize">Items per page (default: 10, max: 50)</param>
         /// <returns>List of creator's requests</returns>
         /// <response code="200">List returned successfully</response>
         /// <response code="400">Invalid Creator ID</response>
         [HttpGet("creator/{creatorId}")]
-        [ProducesResponseType(typeof(IEnumerable<AdvanceRequestResponseDto>), 200)]
+        [ProducesResponseType(typeof(PagedResultDto<AdvanceRequestResponseDto>), 200)]
         [ProducesResponseType(typeof(ProblemDetails), 400)]
-        public async Task<IActionResult> GetByCreatorId([FromRoute] Guid creatorId)
+        public async Task<IActionResult> GetByCreatorId(
+            [FromRoute] Guid creatorId,
+            [FromQuery] int pageNumber = 1,
+            [FromQuery] int pageSize = 10)
         {
             if (creatorId == Guid.Empty)
             {
@@ -84,9 +90,29 @@ namespace Earnings.Advance.Platform.WebApi.Controllers.V1
                 });
             }
 
-            _logger.LogInformation("Fetching requests for creator {CreatorId}", creatorId);
+            if (pageNumber < 1)
+            {
+                return BadRequest(new ProblemDetails
+                {
+                    Title = "Invalid Parameter",
+                    Detail = "Page number must be greater than 0",
+                    Status = 400
+                });
+            }
 
-            var result = await _advanceService.GetByCreatorIdAsync(creatorId);
+            if (pageSize < 1 || pageSize > 50)
+            {
+                return BadRequest(new ProblemDetails
+                {
+                    Title = "Invalid Parameter",
+                    Detail = "Page size must be between 1 and 50",
+                    Status = 400
+                });
+            }
+
+            _logger.LogInformation("Fetching requests for creator {CreatorId} (Page {PageNumber}, Size {PageSize})", creatorId, pageNumber, pageSize);
+
+            var result = await _advanceService.GetByCreatorIdAsync(creatorId, pageNumber, pageSize);
 
             return Ok(result);
         }
@@ -176,7 +202,7 @@ namespace Earnings.Advance.Platform.WebApi.Controllers.V1
                 return BadRequest(new ProblemDetails
                 {
                     Title = "Invalid Amount",
-                    Detail = "Amount must be greater than $100.00",
+                    Detail = "Amount must be greater than R$ 100.00",
                     Status = 400
                 });
             }

@@ -1,4 +1,5 @@
 ﻿using Earnings.Advance.Platform.Application.DTOs.Advance;
+using Earnings.Advance.Platform.Application.DTOs.Common;
 using Earnings.Advance.Platform.Application.DTOs.Simulation;
 using Earnings.Advance.Platform.Application.Interfaces;
 using Earnings.Advance.Platform.Domain.Entities;
@@ -47,10 +48,14 @@ namespace Earnings.Advance.Platform.Application.Services
         /// <summary>
         /// Get requests by creator ID
         /// </summary>
-        public async Task<IEnumerable<AdvanceRequestResponseDto>> GetByCreatorIdAsync(Guid creatorId)
+        public async Task<PagedResultDto<AdvanceRequestResponseDto>> GetByCreatorIdAsync(Guid creatorId, int pageNumber, int pageSize)
         {
-            var requests = await _anticipationRepository.GetByCreatorIdAsync(creatorId);
-            return requests.Select(MapToResponseDto);
+            var skip = (pageNumber - 1) * pageSize;
+            var (items, totalCount) = await _anticipationRepository.GetByCreatorIdAsync(creatorId, skip, pageSize);
+
+            var dtos = items.Select(MapToResponseDto);
+
+            return new PagedResultDto<AdvanceRequestResponseDto>(dtos, totalCount, pageNumber, pageSize);
         }
 
         /// <summary>

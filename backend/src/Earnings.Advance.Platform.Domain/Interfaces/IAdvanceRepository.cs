@@ -9,7 +9,7 @@ namespace Earnings.Advance.Platform.Domain.Interfaces
     {
         Task<AdvanceRequest> CreateAsync(AdvanceRequest anticipationRequest);
         Task<AdvanceRequest?> GetByIdAsync(Guid id);
-        Task<IEnumerable<AdvanceRequest>> GetByCreatorIdAsync(Guid creatorId);
+        Task<(IEnumerable<AdvanceRequest> Items, int TotalCount)> GetByCreatorIdAsync(Guid creatorId, int skip, int take);
         Task<bool> HasPendingRequestAsync(Guid creatorId);
         Task<AdvanceRequest> UpdateAsync(AdvanceRequest anticipationRequest);
         Task<IEnumerable<AdvanceRequest>> GetAllAsync();
