@@ -28,7 +28,7 @@ The project follows Clean Architecture principles:
 
 ## 🔧 Technologies
 
-- .NET 8.0  
+- .NET 9.0  
 - Entity Framework Core (In-Memory)  
 - Swagger/OpenAPI  
 - XUnit (Testing)  
