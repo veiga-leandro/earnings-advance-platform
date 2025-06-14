@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Earnings.Advance.Platform.Application.Validations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Earnings.Advance.Platform.Application.DTOs.Advance
 {
@@ -8,10 +9,11 @@ namespace Earnings.Advance.Platform.Application.DTOs.Advance
     public class CreateAdvanceRequestDto
     {
         [Required(ErrorMessage = "Creator ID is required")]
+        [NotEmptyGuid(ErrorMessage = "Creator ID is required")]
         public Guid CreatorId { get; set; }
 
         [Required(ErrorMessage = "Requested amount is required")]
-        [Range(100.01, double.MaxValue, ErrorMessage = "Amount must be bigger than R$ 100.00")]
+        [MinimumAmount]
         public decimal RequestedAmount { get; set; }
     }
 }

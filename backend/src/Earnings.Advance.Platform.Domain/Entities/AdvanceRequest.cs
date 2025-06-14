@@ -1,4 +1,5 @@
-﻿using Earnings.Advance.Platform.Domain.Enums;
+﻿using Earnings.Advance.Platform.Domain.Constants;
+using Earnings.Advance.Platform.Domain.Enums;
 
 namespace Earnings.Advance.Platform.Domain.Entities
 {
@@ -16,10 +17,6 @@ namespace Earnings.Advance.Platform.Domain.Entities
         public DateTime RequestDate { get; private set; }
         public DateTime? ProcessedDate { get; private set; }
 
-        private const decimal ADVANCE_FEE_RATE = 0.05m;
-
-        private const decimal MINIMUM_AMOUNT = 100.00m;
-
         // Private constructor to EF Core
         private AdvanceRequest() { }
 
@@ -31,8 +28,10 @@ namespace Earnings.Advance.Platform.Domain.Entities
             if (creatorId == Guid.Empty)
                 throw new ArgumentException("Creator ID is required", nameof(creatorId));
 
-            if (requestedAmount < MINIMUM_AMOUNT)
-                throw new ArgumentException($"Requested amount must be bigger than R$ {MINIMUM_AMOUNT:F2}", nameof(requestedAmount));
+            if (requestedAmount < AdvanceConstants.MINIMUM_AMOUNT)
+                throw new ArgumentException(
+                    $"Requested amount must be bigger than {AdvanceConstants.FormatAmount(AdvanceConstants.MINIMUM_AMOUNT)}",
+                    nameof(requestedAmount));
 
             Id = Guid.NewGuid();
             CreatorId = creatorId;
@@ -48,7 +47,7 @@ namespace Earnings.Advance.Platform.Domain.Entities
         /// </summary>
         private void CalculateFeeAndNetAmount()
         {
-            Fee = RequestedAmount * ADVANCE_FEE_RATE;
+            Fee = RequestedAmount * AdvanceConstants.FEE_RATE;
             NetAmount = RequestedAmount - Fee;
         }
 

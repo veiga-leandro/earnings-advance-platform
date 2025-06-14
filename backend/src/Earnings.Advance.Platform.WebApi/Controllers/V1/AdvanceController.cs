@@ -3,6 +3,7 @@ using Earnings.Advance.Platform.Application.DTOs.Advance;
 using Earnings.Advance.Platform.Application.DTOs.Common;
 using Earnings.Advance.Platform.Application.DTOs.Simulation;
 using Earnings.Advance.Platform.Application.Interfaces;
+using Earnings.Advance.Platform.Domain.Constants;
 using Earnings.Advance.Platform.Domain.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -197,12 +198,12 @@ namespace Earnings.Advance.Platform.WebApi.Controllers.V1
         [ProducesResponseType(typeof(ProblemDetails), 400)]
         public async Task<IActionResult> Simulate([FromQuery] decimal amount)
         {
-            if (amount <= 100)
+            if (amount <= AdvanceConstants.MINIMUM_AMOUNT)
             {
                 return BadRequest(new ProblemDetails
                 {
                     Title = "Invalid Amount",
-                    Detail = "Amount must be greater than R$ 100.00",
+                    Detail = $"Amount must be greater than {AdvanceConstants.FormatAmount(AdvanceConstants.MINIMUM_AMOUNT)}",
                     Status = 400
                 });
             }

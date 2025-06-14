@@ -2,6 +2,7 @@
 using Earnings.Advance.Platform.Application.DTOs.Common;
 using Earnings.Advance.Platform.Application.DTOs.Simulation;
 using Earnings.Advance.Platform.Application.Interfaces;
+using Earnings.Advance.Platform.Domain.Constants;
 using Earnings.Advance.Platform.Domain.Entities;
 using Earnings.Advance.Platform.Domain.Exceptions;
 using Earnings.Advance.Platform.Domain.Interfaces;
@@ -14,7 +15,6 @@ namespace Earnings.Advance.Platform.Application.Services
     public class AdvanceService : IAdvanceService
     {
         private readonly IAdvanceRepository _anticipationRepository;
-        private const decimal ANTICIPATION_FEE_RATE = 0.05m;
 
         public AdvanceService(IAdvanceRepository anticipationRepository)
         {
@@ -65,9 +65,7 @@ namespace Earnings.Advance.Platform.Application.Services
         {
             var anticipationRequest = await _anticipationRepository.GetByIdAsync(id);
             if (anticipationRequest == null)
-            {
                 throw new BusinessException("Request not found");
-            }
 
             anticipationRequest.Approve();
             var updated = await _anticipationRepository.UpdateAsync(anticipationRequest);
@@ -82,9 +80,7 @@ namespace Earnings.Advance.Platform.Application.Services
         {
             var anticipationRequest = await _anticipationRepository.GetByIdAsync(id);
             if (anticipationRequest == null)
-            {
                 throw new BusinessException("Request not found");
-            }
 
             anticipationRequest.Reject();
             var updated = await _anticipationRepository.UpdateAsync(anticipationRequest);
@@ -97,7 +93,11 @@ namespace Earnings.Advance.Platform.Application.Services
         /// </summary>
         public async Task<SimulationResponseDto> SimulateAsync(decimal amount)
         {
-            var fee = amount * ANTICIPATION_FEE_RATE;
+            if (amount < AdvanceConstants.MINIMUM_AMOUNT)
+                throw new ArgumentException(
+                    $"Amount must be bigger than {AdvanceConstants.FormatAmount(AdvanceConstants.MINIMUM_AMOUNT)}");
+
+            var fee = amount * AdvanceConstants.FEE_RATE;
             var netAmount = amount - fee;
 
             return new SimulationResponseDto
@@ -105,7 +105,7 @@ namespace Earnings.Advance.Platform.Application.Services
                 RequestedAmount = amount,
                 Fee = fee,
                 NetAmount = netAmount,
-                FeeRate = ANTICIPATION_FEE_RATE
+                FeeRate = AdvanceConstants.FEE_RATE
             };
         }
 
