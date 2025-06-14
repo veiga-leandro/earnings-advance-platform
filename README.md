@@ -43,8 +43,9 @@ earnings-advance-platform/
 
 ## 🛠️ Manual Installation
 
-If you prefer running without Docker, check the specific READMEs:
+Check the specific READMEs:
 - [Backend README](backend/README.md)
+- [Frontend README](frontend/README.md)
 
 ## 📱 Key Features
 
