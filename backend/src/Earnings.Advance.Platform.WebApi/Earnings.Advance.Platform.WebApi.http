@@ -1,0 +1,6 @@
+@Earnings.Advance.Platform.Api_HostAddress = http://localhost:5252
+
+GET {{Earnings.Advance.Platform.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
