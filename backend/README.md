@@ -10,7 +10,7 @@ A REST API for managing earnings advance requests for content creators.
 ✅ List requests by creator  
 ✅ Approve/Reject requests  
 ✅ Simulate advance  
-✅ Business rule validations  
+✅ Business rule   
 ✅ Automated testing
 
 ---
@@ -49,23 +49,29 @@ The project follows Clean Architecture principles:
 
 	```bash
 	git clone [repo-url]
-	cd Earnings.Advance.Platform
+	cd earnings-advance-platform
+	```
+	
+2. Navigate to backend directory:
+
+	```bash
+	cd backend
 	```
 
-2. Restore dependencies:
+3. Restore dependencies:
 
    ```bash
    dotnet restore
    ```
 
-3. Run the application:
+4. Run the application:
 
    ```bash
    dotnet run --project src/Earnings.Advance.Platform.WebApi
    ```
 
-4. Access Swagger at:
-   `https://localhost:7071`
+5. Access Swagger at:
+   `https://localhost:7212/swagger`
 
 ---
 

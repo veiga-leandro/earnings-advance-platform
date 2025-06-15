@@ -21,8 +21,16 @@ earnings-advance-platform/
 │   │   └── Earnings.Advance.Platform.IntegrationTests # Integration tests for the API
 │   │   ├── Earnings.Advance.Platform.UnitTest         # Unit tests for application logic
 │
-├── frontend/                                          # React application with TypeScript (IN CONSTRUCTION)
-│   └── ...
+├── frontend/                                          # React application with TypeScript (🚧 Under Construction 🚧)
+│   ├── src/ 
+│   │   ├── api/									   # API integration 
+│   │   ├── components/								   # Reusable UI components 
+│   │   ├── contexts/								   # React contexts 
+│   │   ├── hooks/									   # Custom hooks 
+│   │   ├── pages/									   # Main application pages 
+│   │   ├── types/									   # TypeScript definitions 
+│   │   └── utils/									   # Helper functions 
+│   └── tests/										   # Test files 
 │
 ├── README.md                                          # This file
 └── ...
