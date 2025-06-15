@@ -23,14 +23,14 @@ earnings-advance-platform/
 │
 ├── frontend/                                          # React application with TypeScript (🚧 Under Construction 🚧)
 │   ├── src/ 
-│   │   ├── api/									   # API integration 
-│   │   ├── components/								   # Reusable UI components 
-│   │   ├── contexts/								   # React contexts 
-│   │   ├── hooks/									   # Custom hooks 
-│   │   ├── pages/									   # Main application pages 
-│   │   ├── types/									   # TypeScript definitions 
-│   │   └── utils/									   # Helper functions 
-│   └── tests/										   # Test files 
+│   │   ├── api/                                       # API integration 
+│   │   ├── components/	                               # Reusable UI components 
+│   │   ├── contexts/	                               # React contexts 
+│   │   ├── hooks/                                     # Custom hooks 
+│   │   ├── pages/                                     # Main application pages 
+│   │   ├── types/                                     # TypeScript definitions 
+│   │   └── utils/                                     # Helper functions 
+│   └── tests/                                         # Test files 
 │
 ├── README.md                                          # This file
 └── ...
