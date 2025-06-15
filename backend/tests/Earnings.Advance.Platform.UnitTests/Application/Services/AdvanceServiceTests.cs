@@ -69,7 +69,7 @@ namespace Earnings.Advance.Platform.UnitTests.Application.Services
             Assert.NotNull(result);
             Assert.Equal(dto.CreatorId, result.CreatorId);
             Assert.Equal(dto.RequestedAmount, result.RequestedAmount);
-            Assert.Equal(50m, result.Fee); // 5% de 1000
+            Assert.Equal(50m, result.Fee); // 5% of 1000
             Assert.Equal(950m, result.NetAmount); // 1000 - 50
             Assert.Equal("pending", result.Status);
         }

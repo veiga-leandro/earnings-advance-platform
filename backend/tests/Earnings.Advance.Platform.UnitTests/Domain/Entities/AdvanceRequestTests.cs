@@ -1,11 +1,6 @@
 ﻿using Earnings.Advance.Platform.Domain.Constants;
 using Earnings.Advance.Platform.Domain.Entities;
 using Earnings.Advance.Platform.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Earnings.Advance.Platform.UnitTests.Domain.Entities
 {

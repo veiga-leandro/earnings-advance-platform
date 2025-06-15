@@ -10,6 +10,7 @@
         public bool HasPrevious => CurrentPage > 1;
         public bool HasNext => CurrentPage < TotalPages;
 
+        public PagedResultDto() { }
         public PagedResultDto(IEnumerable<T> items, int count, int pageNumber, int pageSize)
         {
             Items = items;
